@@ -79,9 +79,7 @@ p=$GOPATH/src/$name
 mkdir -p $p
 cp -R $build/* $p
 
-S3_BUCKET="heroku-buildpack-roosize"
-LIBGD_VERSION="2.0.36RC1"
-LIBGD_PACKAGE="http://${S3_BUCKET}.s3.amazonaws.com/gd-${LIBGD_VERSION}.tar.gz"
+LIBGD_PACKAGE="https://bitbucket.org/pierrejoye/gd-libgd/get/GD_2_0_34RC1.zip"
 VENDORED_LIBGD="$(mktmpdir libgd)"
 mkdir -p $VENDORED_LIBGD && curl $LIBGD_PACKAGE -s -o - | tar xzf - -C $VENDORED_LIBGD
 # setting up paths for building
