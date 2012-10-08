@@ -91,6 +91,9 @@ export LD_LIBRARY_PATH="$VENDORED_LIBGD/lib"
 export LIBPATH="$VENDORED_LIBGD/lib"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
+export C_INCLUDE_PATH="$INCLUDE_PATH"
+export CPLUS_INCLUDE_PATH="$INCLUDE_PATH"
+export LIBRARY_PATH="$INCLUDE_PATH"
 
 unset GIT_DIR # unset git dir or it will mess with goinstall
 echo -n "-----> Running: go get ./..."
