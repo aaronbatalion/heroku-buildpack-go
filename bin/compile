@@ -3,7 +3,7 @@
 
 set -eo pipefail
 mktmpdir() {
-  dir=$(mktemp -t node-$1-XXXX)
+  dir=$(mktemp -t mktmp-$1-XXXX)
   rm -rf $dir
   mkdir -p $dir
   echo $dir
