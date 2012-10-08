@@ -1,13 +1,13 @@
 #!/bin/bash
 # usage: bin/compile <build-dir> <cache-dir>
 
-set -eo pipefail
 mktmpdir() {
   dir=$(mktemp -t mktmp-$1-XXXX)
   rm -rf $dir
   mkdir -p $dir
   echo $dir
 }
+set -eo pipefail
 mkdir -p "$1" "$2"
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
@@ -73,13 +73,6 @@ then
     pip install --use-mirrors bzr > /dev/null 2>&1
     echo " done"
 fi
-    echo -n "       Installing Libpng..."
-    pip install --use-mirrors libpng > /dev/null 2>&1
-    echo " done"
-
-    echo -n "       Installing Libgd..."
-    pip install --use-mirrors libgd > /dev/null 2>&1
-    echo " done"
 
 name=$(cat $build/.godir)
 p=$GOPATH/src/$name
@@ -87,19 +80,20 @@ mkdir -p $p
 cp -R $build/* $p
 
 #if test -d $VENDORED_LIBGD
-#LIBGD_PACKAGE="http://cloud.github.com/downloads/aaronbatalion/heroku-buildpack-go/10719d09-6faf-45d7-9e35-69badb8b1099.gz"
-#VENDORED_LIBGD="$(mktmpdir libgd)"
-#echo -n "       Installing LibGD to $VENDORED_LIBGD..."
-#mkdir -p $VENDORED_LIBGD && curl $LIBGD_PACKAGE -s -o - | tar xzf - -C $VENDORED_LIBGD
-## setting up paths for building
-#PATH="$VENDORED_LIBGD:$PATH"
-#INCLUDE_PATH="$VENDORED_LIBGD/include"
-#export LD_PRELOAD="$VENDORED_LIBGD/lib/libgd.so"
-#export LDFLAGS="-lgd"
-#export LD_LIBRARY_PATH="$VENDORED_LIBGD/lib"
-#export LIBPATH="$VENDORED_LIBGD/lib"
-#export CPATH="$INCLUDE_PATH"
-#export CPPPATH="$INCLUDE_PATH"
+LIBGD_PACKAGE="http://cloud.github.com/downloads/aaronbatalion/heroku-buildpack-go/10719d09-6faf-45d7-9e35-69badb8b1099.gz"
+VENDORED_LIBGD="$(mktmpdir libgd)"
+echo -n "       Installing LibGD to $VENDORED_LIBGD..."
+mkdir -p $VENDORED_LIBGD && curl $LIBGD_PACKAGE -s -o - | tar xzf - -C $VENDORED_LIBGD
+# setting up paths for building
+PATH="$VENDORED_LIBGD:$PATH"
+INCLUDE_PATH="$VENDORED_LIBGD/include"
+export LD_PRELOAD="$VENDORED_LIBGD/lib/libgd.so"
+echo -n "   Library Path `ls -l $LD_PRELOAD`"
+
+export LD_LIBRARY_PATH="$VENDORED_LIBGD/lib"
+export LIBPATH="$VENDORED_LIBGD/lib"
+export CPATH="$INCLUDE_PATH"
+export CPPPATH="$INCLUDE_PATH"
 
 unset GIT_DIR # unset git dir or it will mess with goinstall
 echo -n "-----> Running: go get ./..."
