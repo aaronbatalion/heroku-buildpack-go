@@ -58,8 +58,8 @@ GOPATH=$build/.heroku/g export GOPATH
 PATH=$GOROOT/bin:$PATH
 
 
-#if ! (which hg > /dev/null && which bzr > /dev/null)
-#then
+if ! (which hg > /dev/null && which bzr > /dev/null)
+then
     echo -n "       Installing Virtualenv..."
     virtualenv --python $python --distribute --never-download --prompt='(venv) ' $venv > /dev/null 2>&1
     . $venv/bin/activate > /dev/null 2>&1
@@ -72,7 +72,7 @@ PATH=$GOROOT/bin:$PATH
     echo -n "       Installing Bazaar..."
     pip install --use-mirrors bzr > /dev/null 2>&1
     echo " done"
-
+fi
     echo -n "       Installing Libpng..."
     pip install --use-mirrors libpng > /dev/null 2>&1
     echo " done"
@@ -80,7 +80,6 @@ PATH=$GOROOT/bin:$PATH
     echo -n "       Installing Libgd..."
     pip install --use-mirrors libgd > /dev/null 2>&1
     echo " done"
-#fi
 
 name=$(cat $build/.godir)
 p=$GOPATH/src/$name
