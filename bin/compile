@@ -81,11 +81,13 @@ cp -R $build/* $p
 
 LIBGD_PACKAGE="http://cloud.github.com/downloads/aaronbatalion/heroku-buildpack-go/10719d09-6faf-45d7-9e35-69badb8b1099.gz"
 VENDORED_LIBGD="$(mktmpdir libgd)"
+echo -n "       Installing LibGD..."
 mkdir -p $VENDORED_LIBGD && curl $LIBGD_PACKAGE -s -o - | tar xzf - -C $VENDORED_LIBGD
 # setting up paths for building
 PATH="$VENDORED_LIBGD:$PATH"
 INCLUDE_PATH="$VENDORED_LIBGD/include"
 export LD_PRELOAD="$VENDORED_LIBGD/lib/libgd.so"
+export LDFLAGS="-lgd"
 export LD_LIBRARY_PATH="$VENDORED_LIBGD/lib"
 export LIBPATH="$VENDORED_LIBGD/lib"
 export CPATH="$INCLUDE_PATH"
