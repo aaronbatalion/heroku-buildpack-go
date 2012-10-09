@@ -80,7 +80,7 @@ mkdir -p $p
 cp -R $build/* $p
 
 #if test -d $VENDORED_LIBGD
-LIBGD_PACKAGE="http://cloud.github.com/downloads/aaronbatalion/heroku-buildpack-go/10719d09-6faf-45d7-9e35-69badb8b1099.gz"
+LIBGD_PACKAGE="http://cloud.github.com/downloads/aaronbatalion/heroku-buildpack-go/gd-2.0.tgz"
 VENDORED_LIBGD="$(mktmpdir libgd)"
 mkdir -p $VENDORED_LIBGD && curl $LIBGD_PACKAGE -s -o - | tar xzf - -C $VENDORED_LIBGD
 # setting up paths for building
